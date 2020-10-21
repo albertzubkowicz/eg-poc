@@ -1,9 +1,195 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/bootstrap/scss/functions';
-@import '../node_modules/bootstrap/scss/mixins';
-@import 'variables';
-@import '../node_modules/bootstrap/scss/bootstrap';
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "variables";
+@import "../node_modules/bootstrap/scss/bootstrap";
+/* Importing Bootstrap SCSS file. */
+// @import "~bootstrap/scss/bootstrap";
 
-html, body {
-  color: #fff
+@font-face {
+  font-family: "Open Sans";
+  src: url("./assets/fonts/Open_Sans/OpenSans-Regular.ttf");
+}
+
+html,
+body {
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+.breadcrumb-item {
+  > a {
+    color: $light;
+  }
+}
+
+.input-group-append {
+  border-left: 2px solid #373759 !important;
+  > .btn {
+    background-color: $input-bg;
+  }
+}
+
+input::placeholder {
+  font-size: 0.7rem;
+}
+
+.list-group-item {
+  & + .list-group-item {
+    border-top-width: 2px;
+  }
+  background-color: $eg-blue;
+  border: 2px solid $eg-blue-darker;
+  border-radius: inherit;
+}
+
+.nav-link {
+  &.active {
+    border-bottom: 3px solid $eg-blue-lightest;
+  }
+}
+
+.user-avatar {
+  border-radius: 50%;
+  height: 32px;
+}
+
+.first-letter {
+  align-items: center;
+  border: 3px solid $eg-light-blue;
+  border-radius: 50%;
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+.separator-horizontal {
+  background-color: $white;
+  height: 2px;
+  margin: auto 0;
+  width: 1.5rem;
+}
+
+.available-component {
+  align-items: center;
+  background-color: $eg-blue-darker;
+  border-radius: $list-group-border-radius;
+  display: flex;
+  font-size: 0.7rem;
+  font-weight: bold;
+  justify-content: space-between;
+  padding: $list-group-item-padding-x $list-group-item-padding-x;
+
+  circle,
+  polyline,
+  svg {
+    fill: $eg-light-blue !important;
+    stroke: $eg-light-blue !important;
+  }
+}
+
+.btn {
+  circle,
+  polyline,
+  svg {
+    fill: $white !important;
+    height: 0.8rem;
+    width: 0.8rem;
+  }
+}
+
+label {
+  color: $eg-light-blue;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.navbar {
+  background-color: $eg-blue;
+  font-size: 0.7rem;
+  font-weight: bold;
+
+  .navbar-brand {
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+}
+
+#field-configuration {
+  .form-control {
+    background-color: $eg-blue-light;
+  }
+}
+
+.font-sm {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+.field-type {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+option {
+  font-size: 0.7rem;
+
+  &:disabled {
+    color: $input-placeholder-color;
+  }
+}
+
+.field-options {
+  align-items: center;
+  background-color: $eg-green;
+  border: 2px solid $eg-green;
+  border-radius: inherit;
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0.95;
+  padding: $list-group-item-padding-y $list-group-item-padding-x;
+  position: absolute;
+  width: 100%;
+}
+
+svg {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+li:hover {
+  border: 0;
+  .field-options {
+    display: flex;
+    &-arrange {
+      color: $eg-green-dark;
+    }
+  }
+}
+
+.btn-link {
+  font-weight: $font-weight-bold;
+}
+
+footer {
+  padding: $navbar-padding-y 0;
+}
+
+ngb-datepicker {
+  background-color: $eg-blue !important;
+}
+
+.ngb-dp-day {
+  background-color: $input-bg;
+}
+
+.ngb-dp-weekday {
+  color: $eg-light-blue !important;
+}
+
+.input-group-text {
+  padding: $input-padding-y $input-padding-x-sm;
 }

@@ -1,0 +1,380 @@
+<div class="border-bottom border-top d-flex justify-content-between my-4 py-3">
+  <div>
+    <div>Fill all informations in two sections</div>
+    <div class="font-sm text-light">
+      Creating new template is divided in two parts
+    </div>
+  </div>
+  <button
+    class="btn btn-primary my-auto"
+    disabled="!templateForm.valid"
+    (click)="createTemplate()"
+  >
+    Create
+  </button>
+</div>
+
+<div class="mb-4 mx-n3">
+  <h2><span class="first-letter mr-3">B</span>Basic informations</h2>
+  <form [formGroup]="templateForm">
+    <div class="row ml-3">
+      <div class="col form-group">
+        <label class="text-uppercase" for="">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="&mdash; Template name"
+          formControlName="name"
+        />
+      </div>
+
+      <div class="col form-group">
+        <label class="text-uppercase" for="">Type</label>
+        <div class="input-group shadow-sm mb-2">
+          <input
+            type="text"
+            class="form-control"
+            list="template-types"
+            placeholder="&mdash; Select entry type"
+            formControlName="type"
+          />
+          <datalist id="template-types">
+            <option value="Example type">Example type</option>
+          </datalist>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-small-down"
+                ></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col form-group">
+        <label class="text-uppercase" for="">Available</label>
+        <div class="input-group shadow-sm">
+          <input
+            class="form-control"
+            placeholder="&mdash; from date"
+            name="dp"
+            formControlName="availableFrom"
+            ngbDatepicker
+            #dpFrom="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button class="btn" (click)="dpFrom.toggle()" type="button">
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-calendar-date-2"
+                ></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col form-group">
+        <label class="invisible text-uppercase" for="">Available</label>
+        <div class="input-group shadow-sm">
+          <input
+            class="form-control"
+            placeholder="&mdash; to date"
+            name="dp"
+            formControlName="availableTo"
+            ngbDatepicker
+            #dpTo="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn calendar"
+              (click)="dpTo.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="mb-4 mx-n3">
+  <h2><span class="first-letter mr-3">F</span>Fields configuration</h2>
+  <div class="row ml-3">
+    <div class="col-5">
+      <h6 class="font-sm font-weight-bold text-center text-muted">
+        Current fields
+      </h6>
+      <ul class="list-group" id="current-fields">
+        <li
+          class="d-flex align-items-center list-group-item mb-3"
+          *ngFor="let field of currentFields; let i = index"
+        >
+          <div class="mr-auto">
+            <div class="font-sm font-weight-bold">{{ field.name }}</div>
+            <div class="text-success font-sm font-weight-bold text-uppercase">
+              {{ field.type }}
+            </div>
+          </div>
+          <span class="mr-2 text-success">{{ i + 1 }}.</span>
+          <svg>
+            <use xlink:href="../../../assets/icons.svg#general-text-2-2"></use>
+          </svg>
+          <div class="field-options">
+            <svg (click)="editField(field)">
+              <use
+                xlink:href="../../../assets/icons.svg#general-settings"
+              ></use>
+            </svg>
+            <div class="field-options-arrange mx-auto">
+              <svg class="mr-2">
+                <use
+                  xlink:href="../../../assets/icons.svg#general-pointing-up"
+                ></use>
+              </svg>
+              <svg class="mr-2">
+                <use
+                  xlink:href="../../../assets/icons.svg#general-triangle-up"
+                ></use>
+              </svg>
+              <svg class="mr-2">
+                <use
+                  xlink:href="../../../assets/icons.svg#general-triangle-down"
+                ></use>
+              </svg>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-pointing-down"
+                ></use>
+              </svg>
+            </div>
+            <svg (click)="removeField(field.id)">
+              <use
+                xlink:href="../../../assets/icons.svg#general-delete-forever"
+              ></use>
+            </svg>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-7">
+      <ng-container *ngIf="!showFieldConfiguration">
+        <h6 class="font-sm font-weight-bold text-center text-muted">
+          Available components
+        </h6>
+
+        <div class="mb-3 row row-cols-3" id="available-components">
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.TEXT_ONE_LINE)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.TEXT_ONE_LINE }}
+              </span>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-text-2-2"
+                ></use>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.TEXT_MULTILINE)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.TEXT_MULTILINE }}
+              </span>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-text-2-2"
+                ></use>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.TEXT_RICH)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.TEXT_RICH }}
+              </span>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-text-2-2"
+                ></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row row-cols-3" id="available-components">
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.SELECT_FROM_LIST_SINGLE)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.SELECT_FROM_LIST_SINGLE }}
+              </span>
+              <svg>
+                <use xlink:href="../../../assets/icons.svg#general-drag"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.SELECT_FROM_LIST_MULTI)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.SELECT_FROM_LIST_MULTI }}
+              </span>
+              <svg fill="#fff">
+                <use xlink:href="../../../assets/icons.svg#general-drag"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.CHECKLIST)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.CHECKLIST }}
+              </span>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-c-check"
+                ></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-cols-3" id="available-components">
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.RADIOBUTTONS)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.RADIOBUTTONS }}
+              </span>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-bullet-list-70"
+                ></use>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="available-component shadow-sm"
+              (click)="addField(templateComponentType.DATE_TIME_PICKER)"
+            >
+              <span class="mr-2 text-truncate">
+                {{ templateComponentType.DATE_TIME_PICKER }}
+              </span>
+              <svg>
+                <use
+                  xlink:href="../../../assets/icons.svg#general-calendar-date"
+                ></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showFieldConfiguration">
+        <h6 class="font-sm font-weight-bold text-center text-white">
+          Field configuration
+        </h6>
+        <div class="card" id="field-configuration">
+          <div class="card-body">
+            <div class="d-flex align-items-center border p-2 rounded mb-3">
+              <div class="mr-auto">
+                <div>
+                  <ng-container
+                    *ngIf="
+                      this.fieldForm.controls.name.value;
+                      else currentFieldName
+                    "
+                  >
+                    <span class="font-sm font-weight-bold mr-3"
+                      >&mdash; {{ fieldForm.controls.name.value }} &mdash;</span
+                    >
+                  </ng-container>
+                  <ng-template #currentFieldName
+                    ><span class="font-sm font-weight-bold mr-3"
+                      >&mdash; no name &mdash;</span
+                    ></ng-template
+                  >
+                  <ng-container
+                    *ngIf="
+                      fieldForm.controls.label.value;
+                      else currentFieldLabel
+                    "
+                  >
+                    <span class="font-sm font-weight-bold text-muted"
+                      >&mdash;
+                      {{ fieldForm.controls.label.value }} &mdash;</span
+                    >
+                  </ng-container>
+                  <ng-template #currentFieldLabel
+                    ><span class="font-sm font-weight-bold text-muted"
+                      >&mdash; no label &mdash;</span
+                    ></ng-template
+                  >
+                </div>
+                <div class="font-sm font-weight-bold text-warning">
+                  {{ this.fieldForm.controls.type.value }}
+                </div>
+              </div>
+              <img src="" alt="" />
+            </div>
+
+            <form [formGroup]="fieldForm">
+              <div class="row">
+                <div class="col form-group">
+                  <label class="text-uppercase" for="">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="&mdash; Field name"
+                    formControlName="name"
+                  />
+                </div>
+                <div class="col form-group">
+                  <label class="text-uppercase" for="">Label</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="&mdash; Field label"
+                    formControlName="label"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="card-footer d-flex justify-content-between">
+            <button
+              class="btn btn-link text-muted"
+              (click)="cancelFieldConfiguration()"
+            >
+              Cancel
+            </button>
+            <button class="btn btn-link" (click)="setField()">Update</button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
